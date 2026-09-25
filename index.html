@@ -1,0 +1,1152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FD AI | Atendimento com IA no WhatsApp para empresas</title>
+<meta name="description" content="IA de atendimento no WhatsApp que responde na hora, qualifica, faz follow-up e entrega o lead pronto para sua equipe comercial. Implantação acompanhada em até 30 dias.">
+<link rel="canonical" href="https://fdai.site/">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="FD AI">
+<meta property="og:title" content="FD AI | Atendimento com IA no WhatsApp">
+<meta property="og:description" content="Seu lead chama. A IA responde. Você entra para vender.">
+<meta property="og:url" content="https://fdai.site/">
+<meta name="theme-color" content="#0E3B34">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   FD AI — style.css
+   Conceito: o hero é "noite" (22:47, a empresa fechada e a IA
+   atendendo). O resto da página é "dia": claro e calmo.
+   ========================================================= */
+
+:root {
+  --night: #0D2E29;
+  --night-2: #144038;
+  --night-line: #25564C;
+  --ink: #17231F;
+  --muted: #5A6A64;
+  --paper: #FFFFFF;
+  --mist: #EFF4F0;
+  --line: #D8E2DB;
+  --mint: #D4F2DC;
+  --mint-strong: #8FE0AE;
+  --amber: #FFB23F;
+  --amber-dark: #E89A22;
+  --whats: #1FA855;
+  --text: #17231F;
+
+  --display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --wrap: 1180px;
+  --gutter: clamp(20px, 5vw, 48px);
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3, p, ol, ul, dl, dd, figure { margin: 0; }
+ol, ul { padding: 0; list-style: none; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: 12px; top: -60px; background: var(--amber); color: var(--ink); padding: 10px 14px; border-radius: var(--r-sm); z-index: 100; font-weight: 600; }
+.skip:focus { top: 12px; }
+
+/* ---------- Tipografia base ---------- */
+.h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  max-width: 20ch;
+  text-wrap: balance;
+}
+.h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(22px, 2.2vw, 28px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.muted { color: var(--muted); max-width: 52ch; }
+.section { padding-block: clamp(72px, 10vw, 128px); }
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: 12px 24px; text-align: center; line-height: 1.25;
+  border: 0; border-radius: 999px;
+  font-weight: 600; font-size: 16px; text-decoration: none; cursor: pointer;
+  transition: background-color .15s, transform .15s;
+  background: var(--amber); color: var(--ink);
+}
+.btn:hover { background: var(--amber-dark); }
+.btn:active { transform: translateY(1px); }
+.btn--sm { min-height: 42px; padding: 0 18px; font-size: 14px; }
+.btn--primary { background: var(--amber); color: var(--ink); }
+.btn--primary:hover { background: var(--amber-dark); }
+.btn--dark { background: var(--night); color: #fff; }
+.btn--dark:hover { background: var(--night-2); }
+.btn--line { background: transparent; color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.35); }
+.btn--line:hover { box-shadow: inset 0 0 0 1.5px #fff; }
+.btn--whats { background: var(--whats); color: #fff; }
+.btn--whats:hover { background: #178F47; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--night);
+  color: #fff;
+  transition: box-shadow .2s;
+}
+.site-header.is-scrolled { box-shadow: 0 1px 0 var(--night-line); }
+.site-header__inner { display: flex; align-items: center; gap: 32px; height: 72px; }
+.logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: -0.03em;
+  text-decoration: none;
+}
+.logo__mark {
+  width: 26px; height: 22px; position: relative;
+  background: var(--mint-strong); border-radius: 8px 8px 8px 2px;
+}
+.logo__mark::after {
+  content: ""; position: absolute; left: 7px; top: 9px;
+  width: 4px; height: 4px; border-radius: 50%; background: var(--night);
+  box-shadow: 6px 0 0 var(--night);
+}
+.site-nav { display: flex; gap: 28px; margin-left: auto; }
+.site-nav a { text-decoration: none; font-size: 15px; color: rgba(255,255,255,.75); }
+.site-nav a:hover { color: #fff; }
+.site-header .btn--dark { background: #fff; color: var(--night); }
+.site-header .btn--dark:hover { background: var(--mint); }
+
+/* ---------- Hero (noite) ---------- */
+.hero {
+  background: var(--night);
+  color: #fff;
+  padding-block: clamp(48px, 7vw, 96px) clamp(64px, 8vw, 112px);
+  overflow: hidden;
+}
+.hero__grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(40px, 6vw, 80px); align-items: center; }
+.live {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 14px; color: rgba(255,255,255,.72);
+  margin-bottom: 28px;
+}
+.live__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 0 rgba(255,178,63,.6); animation: pulse 2s infinite; flex: none; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(255,178,63,0); } 100% { box-shadow: 0 0 0 0 rgba(255,178,63,0); } }
+
+.hero__title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(40px, 5.2vw, 72px);
+  line-height: .98;
+  letter-spacing: -0.035em;
+}
+.hero__title span { display: block; }
+.hero__title span:nth-child(1) { color: rgba(255,255,255,.45); }
+.hero__title span:nth-child(2) { color: var(--mint-strong); }
+.hero__lead { margin-top: 28px; font-size: clamp(17px, 1.4vw, 19px); color: rgba(255,255,255,.78); max-width: 46ch; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.hero__facts { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 32px; font-size: 14px; color: rgba(255,255,255,.6); }
+.hero__facts li { position: relative; padding-left: 20px; }
+.hero__facts li::before { content: "✓"; position: absolute; left: 0; color: var(--mint-strong); }
+
+.hero__stage { position: relative; display: grid; place-items: center; min-height: 560px; }
+.clock {
+  position: absolute; inset: 50% auto auto 50%; transform: translate(-50%, -54%);
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(120px, 17vw, 240px); letter-spacing: -0.05em; line-height: 1;
+  color: transparent; -webkit-text-stroke: 2px #2E6358;
+  user-select: none; pointer-events: none; white-space: nowrap;
+}
+.phone {
+  position: relative; width: min(100%, 360px);
+  background: #E6ECE7;
+  border-radius: 34px; padding: 10px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 40px 80px rgba(0,0,0,.35);
+}
+.phone__top {
+  display: flex; align-items: center; gap: 10px;
+  background: #fff; color: var(--ink);
+  padding: 14px 14px; border-radius: 26px 26px 10px 10px;
+}
+.phone__top strong { display: block; font-size: 15px; line-height: 1.2; }
+.phone__top small { display: block; font-size: 12px; color: var(--muted); }
+.avatar {
+  width: 38px; height: 38px; flex: none; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--mint); color: var(--night); font-weight: 600; font-size: 13px;
+}
+.tag { margin-left: auto; font-size: 11px; font-weight: 600; padding: 4px 9px; border-radius: 999px; white-space: nowrap; }
+.tag--on { background: var(--mint); color: #155C3A; }
+
+.chat { display: flex; flex-direction: column; gap: 8px; padding: 16px 8px 12px; min-height: 380px; }
+.bubble {
+  position: relative; max-width: 82%;
+  padding: 9px 12px 20px; border-radius: 14px;
+  font-size: 14px; line-height: 1.4; color: var(--ink);
+  background: #fff;
+  min-width: 92px;
+}
+.bubble time { position: absolute; right: 10px; bottom: 4px; font-size: 10.5px; color: #7B8A84; }
+.bubble--in { align-self: flex-start; border-top-left-radius: 4px; }
+.bubble--out { align-self: flex-end; background: var(--mint); border-top-right-radius: 4px; }
+.chat .bubble { opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; }
+.chat .bubble.is-in { opacity: 1; transform: none; }
+.phone__compose {
+  margin: 0 4px 4px; padding: 12px 16px; border-radius: 999px;
+  background: #fff; color: #9AA59F; font-size: 14px;
+}
+.handoff {
+  position: absolute; left: -24px; bottom: -18px;
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; color: var(--ink);
+  padding: 14px 18px 14px 14px; border-radius: var(--r-md);
+  box-shadow: 0 20px 40px rgba(0,0,0,.3);
+  opacity: 0; transform: translateY(10px) scale(.97);
+  transition: opacity .4s, transform .4s;
+}
+.handoff.is-in { opacity: 1; transform: none; }
+.handoff strong { display: block; font-size: 15px; line-height: 1.2; }
+.handoff small { font-size: 13px; color: var(--muted); }
+.handoff__check {
+  width: 34px; height: 34px; border-radius: 50%; flex: none;
+  display: grid; place-items: center;
+  background: var(--amber); font-weight: 700;
+}
+
+/* ---------- Faixa ---------- */
+.band { background: var(--mist); border-bottom: 1px solid var(--line); }
+.band__list { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 32px; padding-block: 22px; font-weight: 600; font-size: 15px; }
+.band__list li { display: flex; align-items: center; gap: 10px; }
+.band__list li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--whats); }
+
+/* ---------- Problema ---------- */
+.problem__grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+.problem__head { position: sticky; top: 120px; }
+.problem__head .muted { margin-top: 20px; }
+.timeline { border-left: 2px solid var(--line); }
+.timeline li { position: relative; display: grid; grid-template-columns: 128px 1fr; gap: 20px; padding: 0 0 40px 28px; }
+.timeline li:last-child { padding-bottom: 0; }
+.timeline li::before {
+  content: ""; position: absolute; left: -7px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--ink);
+}
+.timeline time { font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--muted); line-height: 1.5; }
+.timeline h3 { font-size: 19px; line-height: 1.3; margin-bottom: 6px; }
+.timeline p { color: var(--muted); font-size: 16px; }
+.problem__close {
+  margin-top: clamp(56px, 7vw, 88px);
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(22px, 2.4vw, 30px); line-height: 1.25; letter-spacing: -0.015em;
+}
+.problem__close.wrap { max-width: var(--wrap); }
+
+/* ---------- Como funciona ---------- */
+.how { background: var(--mist); }
+.how__head { margin-bottom: clamp(48px, 6vw, 80px); }
+.feature {
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center;
+  padding-block: clamp(40px, 5vw, 64px);
+  border-top: 1px solid var(--line);
+}
+.feature:nth-of-type(even) .feature__text { order: 2; }
+.feature__text p { margin-top: 14px; color: var(--muted); max-width: 46ch; }
+.ticks { margin-top: 22px; display: grid; gap: 10px; font-size: 16px; }
+.ticks li { position: relative; padding-left: 28px; }
+.ticks li::before {
+  content: ""; position: absolute; left: 0; top: .5em;
+  width: 14px; height: 8px; border-left: 2px solid var(--whats); border-bottom: 2px solid var(--whats);
+  transform: rotate(-45deg) translateY(-3px);
+}
+
+.card {
+  background: var(--paper); border-radius: var(--r-lg);
+  padding: 24px; display: grid; gap: 14px;
+  box-shadow: 0 1px 0 var(--line), 0 24px 48px -24px rgba(13,46,41,.25);
+}
+.card__title { display: flex; justify-content: space-between; gap: 12px; font-weight: 600; font-size: 15px; }
+.card__title span { color: var(--muted); font-weight: 500; }
+.card__foot { font-size: 13px; color: var(--muted); }
+.bubble--static { font-size: 14px; }
+
+.notif { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--mist); border-radius: var(--r-md); }
+.notif strong { display: block; font-size: 15px; line-height: 1.2; }
+.notif small { font-size: 13px; color: var(--muted); }
+.notif time { margin-left: auto; font-size: 13px; color: var(--muted); }
+.notif__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--amber); flex: none; }
+
+.qual { display: grid; }
+.qual__row { display: grid; grid-template-columns: 24px 1fr; column-gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.qual__row::before {
+  grid-row: span 2; content: ""; width: 20px; height: 20px; border-radius: 50%; margin-top: 2px;
+  border: 2px solid var(--line);
+}
+.qual__row.is-done::before { background: var(--whats) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-6.5' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat; border-color: var(--whats); }
+.qual__row.is-next::before { border-color: var(--amber); border-style: dashed; }
+.qual dt { font-size: 13px; color: var(--muted); }
+.qual dd { font-weight: 600; font-size: 15px; }
+.meter { height: 6px; border-radius: 99px; background: var(--mist); overflow: hidden; }
+.meter span { display: block; height: 100%; background: var(--whats); border-radius: inherit; }
+
+.cadence { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.cadence li { font-size: 12.5px; color: var(--muted); padding-top: 12px; border-top: 3px solid var(--line); }
+.cadence b { display: block; font-size: 14px; color: var(--ink); }
+.cadence .is-done { border-top-color: var(--mint-strong); }
+.cadence .is-win { border-top-color: var(--whats); color: #155C3A; font-weight: 600; }
+
+.card--ticket { border-left: 6px solid var(--amber); }
+.ticket { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+.ticket dt { font-size: 13px; color: var(--muted); }
+.ticket dd { font-weight: 600; font-size: 15px; }
+.ticket__to {
+  justify-self: start; font-size: 14px; font-weight: 600;
+  background: var(--night); color: #fff; padding: 8px 14px; border-radius: 999px;
+}
+
+/* ---------- Personalização ---------- */
+.custom__grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(40px, 6vw, 96px); }
+.custom__grid .muted { margin-top: 20px; }
+.custom__list { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 32px; }
+.custom__list div { padding-top: 18px; border-top: 2px solid var(--ink); }
+.custom__list dt { font-family: var(--display); font-weight: 700; font-size: 20px; line-height: 1.25; margin-bottom: 8px; }
+.custom__list dd { color: var(--muted); font-size: 16px; }
+
+/* ---------- Comparativo ---------- */
+.compare { background: var(--mist); }
+.compare__title { margin-bottom: 48px; }
+.compare__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.lane { border-radius: var(--r-lg); padding: clamp(24px, 3vw, 36px); }
+.lane h3 { font-size: 15px; font-weight: 600; margin-bottom: 20px; }
+.lane ol { display: grid; gap: 14px; }
+.lane li { display: grid; grid-template-columns: 64px 1fr; gap: 12px; font-size: 17px; }
+.lane time { font-family: var(--display); font-weight: 700; }
+.lane__end { margin-top: 24px; padding-top: 18px; font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+.lane--manual { background: var(--paper); color: var(--muted); }
+.lane--manual h3 { color: var(--muted); }
+.lane--manual .lane__end { border-top: 1px dashed var(--line); color: #A2463A; text-decoration: line-through; text-decoration-thickness: 2px; }
+.lane--ai { background: var(--night); color: #fff; }
+.lane--ai h3 { color: var(--mint-strong); }
+.lane--ai time { color: var(--mint-strong); }
+.lane--ai .lane__end { border-top: 1px solid var(--night-line); color: var(--amber); }
+
+/* ---------- Implantação ---------- */
+.implant__head { display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: 56px; }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; counter-reset: step; }
+.steps li { counter-increment: step; padding-top: 20px; border-top: 1px solid var(--line); }
+.steps li::before {
+  content: counter(step);
+  display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 20px;
+  border-radius: 50%; background: var(--mint); color: var(--night);
+  font-family: var(--display); font-weight: 800; font-size: 18px;
+}
+.steps h3 { font-family: var(--display); font-size: 20px; line-height: 1.25; margin-bottom: 8px; }
+.steps p { color: var(--muted); font-size: 16px; }
+.implant__time { margin-top: 48px; font-size: 17px; color: var(--muted); }
+.implant__time strong { color: var(--ink); font-family: var(--display); font-size: 22px; margin-right: 6px; }
+
+/* ---------- CTA ---------- */
+.cta { background: var(--night); color: #fff; padding-block: clamp(72px, 9vw, 120px); }
+.cta__inner { display: grid; justify-items: start; gap: 22px; }
+.cta__title {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(34px, 5vw, 64px); line-height: 1.02; letter-spacing: -0.035em;
+  max-width: 17ch; text-wrap: balance;
+}
+.cta p { color: rgba(255,255,255,.75); max-width: 48ch; }
+.cta .btn { margin-top: 8px; }
+
+/* ---------- Diagnóstico ---------- */
+.diag__grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+.diag__side .muted { margin-top: 20px; }
+.quiz {
+  background: var(--mist); border-radius: var(--r-lg);
+  padding: clamp(24px, 4vw, 44px); min-height: 420px;
+}
+.quiz__progress { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--muted); margin-bottom: 32px; white-space: nowrap; }
+.quiz__progress #stepNum { font-weight: 600; color: var(--ink); margin-right: -10px; }
+.quiz__bar { flex: 1; height: 4px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.quiz__bar span { display: block; height: 100%; width: 12.5%; background: var(--night); transition: width .3s; }
+.step { display: none; border: 0; padding: 0; margin: 0; min-width: 0; }
+.step.is-active { display: block; }
+.step legend {
+  padding: 0; margin-bottom: 20px;
+  font-family: var(--display); font-weight: 700; font-size: clamp(22px, 2.4vw, 28px); line-height: 1.2; letter-spacing: -0.015em;
+}
+.step__hint { margin: -8px 0 18px; font-size: 15px; color: var(--muted); }
+.quiz input, .quiz textarea {
+  width: 100%; padding: 16px 18px;
+  border: 1.5px solid var(--line); border-radius: var(--r-md); background: var(--paper);
+  font-size: 17px; resize: vertical;
+}
+.quiz input:focus, .quiz textarea:focus { outline: none; border-color: var(--night); }
+.quiz .is-error { border-color: #C24B3A; }
+.options { display: flex; flex-wrap: wrap; gap: 10px; }
+.options button {
+  padding: 12px 16px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--line); background: var(--paper);
+  font-size: 15px; font-weight: 500; text-align: left;
+}
+.options button:hover { border-color: var(--night); }
+.options button.is-selected, .options button[aria-pressed="true"] { background: var(--night); border-color: var(--night); color: #fff; }
+.step__nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 28px; }
+.step__nav .next { margin-left: auto; }
+.back { background: none; border: 0; padding: 8px 0; cursor: pointer; color: var(--muted); font-size: 15px; text-decoration: underline; text-underline-offset: 3px; }
+.back:hover { color: var(--ink); }
+.step--done p { color: var(--muted); margin-bottom: 28px; }
+
+/* ---------- FAQ ---------- */
+.faq { border-top: 1px solid var(--line); }
+.faq__grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(40px, 6vw, 96px); }
+.faq__list details { border-bottom: 1px solid var(--line); }
+.faq__list details:first-child { border-top: 1px solid var(--line); }
+.faq__list summary {
+  list-style: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  padding: 22px 0; font-weight: 600; font-size: 18px;
+}
+.faq__list summary::-webkit-details-marker { display: none; }
+.faq__list summary::after {
+  content: ""; width: 12px; height: 12px; flex: none;
+  border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  transform: rotate(45deg) translate(-3px, -3px); transition: transform .2s;
+}
+.faq__list details[open] summary::after { transform: rotate(-135deg) translate(-3px, -3px); }
+.faq__list details p { padding: 0 40px 24px 0; color: var(--muted); max-width: 60ch; }
+
+/* ---------- Footer ---------- */
+.site-footer { background: var(--night); color: rgba(255,255,255,.7); padding-block: 56px; font-size: 15px; }
+.site-footer__inner { display: grid; grid-template-columns: 1fr auto; gap: 32px 48px; }
+.logo--light { color: #fff; margin-bottom: 10px; }
+.site-footer__links { display: grid; grid-template-columns: repeat(3, auto); gap: 8px 28px; }
+.site-footer__links a { text-decoration: none; }
+.site-footer__links a:hover { color: #fff; text-decoration: underline; }
+.site-footer__copy { grid-column: 1 / -1; padding-top: 24px; border-top: 1px solid var(--night-line); font-size: 14px; }
+
+/* ---------- Popup de saída ---------- */
+.exit { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 20px; background: rgba(8,24,21,.6); }
+.exit[hidden] { display: none; }
+.exit__box { position: relative; width: min(100%, 520px); background: var(--paper); border-radius: var(--r-lg); padding: clamp(28px, 4vw, 40px); }
+.exit__box h2 { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.15; letter-spacing: -0.02em; padding-right: 32px; }
+.exit__box p { margin: 12px 0 20px; color: var(--muted); }
+.exit__box input { width: 100%; padding: 15px 18px; border: 1.5px solid var(--line); border-radius: var(--r-md); font-size: 16px; }
+.exit__box input:focus { outline: none; border-color: var(--night); }
+.exit__actions { display: flex; align-items: center; gap: 20px; margin-top: 18px; flex-wrap: wrap; }
+.exit__close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--mist); font-size: 22px; line-height: 1; cursor: pointer; }
+
+/* =========================================================
+   PÁGINAS DE SEO (artigos): nav, breadcrumb, hero + hero-card,
+   article, notice, faq com details, footer, 404
+   ========================================================= */
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 76px; border-bottom: 1px solid var(--line); }
+.brand {
+  display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: -0.03em; color: var(--ink);
+}
+.brand::before { content: ""; width: 26px; height: 22px; border-radius: 8px 8px 8px 2px; background: var(--night); }
+.navlinks { display: flex; align-items: center; gap: 26px; }
+.navlinks a:not(.btn) { text-decoration: none; font-size: 15px; color: var(--muted); }
+.navlinks a:not(.btn):hover { color: var(--ink); }
+.navlinks .btn { min-height: 42px; padding: 8px 18px; font-size: 14px; }
+
+.breadcrumb { padding-top: 28px; font-size: 14px; color: var(--muted); }
+.breadcrumb a { color: var(--muted); }
+.breadcrumb a:hover { color: var(--ink); }
+
+.breadcrumb + .hero {
+  display: grid; grid-template-columns: 1.2fr .8fr; gap: clamp(32px, 5vw, 72px); align-items: center;
+  margin-top: 24px; padding: clamp(36px, 5vw, 64px);
+  border-radius: var(--r-lg);
+}
+.breadcrumb + .hero h1 {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(36px, 4.6vw, 60px); line-height: 1.02; letter-spacing: -0.035em;
+  text-wrap: balance; margin-bottom: 18px;
+}
+.breadcrumb + .hero > div > p { color: rgba(255,255,255,.78); font-size: 18px; max-width: 44ch; margin-bottom: 28px; }
+.eyebrow { font-size: 14px; color: var(--muted); margin-bottom: 14px; }
+.breadcrumb + .hero .eyebrow { color: var(--mint-strong); }
+.hero-card { background: var(--night-2); border-radius: var(--r-md); padding: 26px; box-shadow: inset 0 0 0 1px var(--night-line); }
+.hero-card h3 { font-family: var(--display); font-size: 20px; line-height: 1.25; margin-bottom: 10px; color: #fff; }
+.hero-card p { color: rgba(255,255,255,.75); font-size: 15px; }
+.hero-card .small { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--night-line); font-size: 13px; color: var(--mint-strong); }
+
+.section.tight { padding-block: clamp(48px, 6vw, 80px); }
+.article { max-width: 720px; }
+.article h2 {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(26px, 2.8vw, 34px); line-height: 1.15; letter-spacing: -0.02em;
+  margin: 48px 0 14px;
+}
+.article > h2:first-child, .article .eyebrow + h2 { margin-top: 0; }
+.article p { color: #3E4D48; font-size: 18px; line-height: 1.7; margin-bottom: 16px; }
+.article ul { margin: 0 0 16px; display: grid; gap: 10px; }
+.article li { position: relative; padding-left: 28px; font-size: 18px; color: #3E4D48; }
+.article li::before {
+  content: ""; position: absolute; left: 0; top: .55em;
+  width: 14px; height: 8px; border-left: 2px solid var(--whats); border-bottom: 2px solid var(--whats);
+  transform: rotate(-45deg) translateY(-3px);
+}
+.article > .btn { margin-top: 24px; }
+.notice { margin: 32px 0; padding: 22px 24px; background: var(--mint); border-radius: var(--r-md); border-left: 5px solid var(--whats); }
+.notice p { margin: 0; color: var(--ink); }
+
+.section.faq .article details { border-bottom: 1px solid var(--line); }
+.section.faq .article details:first-of-type { border-top: 1px solid var(--line); margin-top: 24px; }
+.article summary {
+  list-style: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 20px;
+  padding: 20px 0; font-weight: 600; font-size: 18px;
+}
+.article summary::-webkit-details-marker { display: none; }
+.article summary::after {
+  content: ""; width: 12px; height: 12px; flex: none;
+  border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  transform: rotate(45deg) translate(-3px, -3px); transition: transform .2s;
+}
+.article details[open] summary::after { transform: rotate(-135deg) translate(-3px, -3px); }
+.article details p { font-size: 17px; padding-right: 40px; }
+
+.footer { background: var(--night); color: rgba(255,255,255,.7); padding-block: 40px; font-size: 15px; }
+.footergrid { display: flex; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; }
+.footer a { color: #fff; }
+
+.cta h1 { font-family: var(--display); font-weight: 800; font-size: clamp(36px, 5vw, 60px); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 14px; }
+.cta > .wrap > p { margin-bottom: 28px; }
+
+.related { margin: 32px 0; padding: 20px 24px; background: var(--mist); border-radius: var(--r-md); }
+.related p { margin-bottom: 10px; font-size: 15px; }
+.related a { display: inline-block; margin: 4px 8px 4px 0; padding: 6px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; text-decoration: none; border: 1px solid var(--line); background: var(--paper); }
+.related a:hover { border-color: var(--night); background: var(--mint); }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 980px) {
+  .site-nav { display: none; }
+  .navlinks a:not(.btn) { display: none; }
+  .breadcrumb + .hero { grid-template-columns: 1fr; }
+  .site-header__inner { justify-content: space-between; }
+  .hero__grid, .problem__grid, .feature, .custom__grid, .diag__grid, .faq__grid { grid-template-columns: 1fr; }
+  .feature:nth-of-type(even) .feature__text { order: 0; }
+  .problem__head { position: static; }
+  .hero__stage { min-height: 0; padding-top: 24px; }
+  .clock { font-size: clamp(110px, 30vw, 200px); }
+  .steps { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .site-header .btn--sm { padding: 0 14px; font-size: 13px; }
+  .hero__actions .btn { width: 100%; }
+  .handoff { left: 0; bottom: -18px; }
+  .band__list { justify-content: flex-start; }
+  .timeline li { grid-template-columns: 1fr; gap: 4px; }
+  .compare__grid, .custom__list, .steps { grid-template-columns: 1fr; }
+  .ticket { grid-template-columns: 1fr; }
+  .cadence { grid-template-columns: 1fr 1fr; row-gap: 14px; }
+  .site-footer__inner, .site-footer__links { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "FD AI",
+      "url": "https://fdai.site/",
+      "description": "IA aplicada ao atendimento e vendas no WhatsApp."
+    },
+    {
+      "@type": "Service",
+      "name": "Atendimento com IA no WhatsApp",
+      "provider": { "@type": "Organization", "name": "FD AI" },
+      "areaServed": "BR",
+      "description": "IA personalizada para atender, qualificar, fazer follow-up e entregar oportunidades para a equipe comercial."
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "A IA substitui minha equipe?", "acceptedAnswer": { "@type": "Answer", "text": "Não precisa. Ela assume o atendimento repetitivo e entrega para sua equipe as oportunidades que precisam de uma pessoa." } },
+        { "@type": "Question", "name": "Ela atende fora do horário comercial?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. O atendimento continua à noite, em finais de semana e feriados." } },
+        { "@type": "Question", "name": "A IA é igual para todas as empresas?", "acceptedAnswer": { "@type": "Answer", "text": "Não. Informações, regras, perguntas, linguagem e fluxo são configurados conforme a sua operação." } },
+        { "@type": "Question", "name": "Posso pedir alterações durante a implantação?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. O período de implantação inclui testes e ajustes para alinhar o atendimento." } },
+        { "@type": "Question", "name": "Quanto custa?", "acceptedAnswer": { "@type": "Answer", "text": "O valor depende do que sua operação precisa. Por isso fazemos um diagnóstico antes de montar a proposta." } }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="site-header" id="topo">
+  <div class="wrap site-header__inner">
+    <a class="logo" href="/" aria-label="FD AI, página inicial">
+      <span class="logo__mark" aria-hidden="true"></span>FD AI
+    </a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="#por-que">Por que usar</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#implantacao">Implantação</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <a class="btn btn--dark btn--sm" href="#diagnostico">Falar com especialista</a>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <p class="live"><span class="live__dot" aria-hidden="true"></span>Sua empresa fechou às 18h. O WhatsApp continua atendendo.</p>
+        <h1 class="hero__title">
+          <span>Seu lead chama.</span>
+          <span>A IA responde.</span>
+          <span>Você entra para vender.</span>
+        </h1>
+        <p class="hero__lead">Automatize o primeiro atendimento, a qualificação e o follow-up no WhatsApp, sem deixar sua empresa refém do celular.</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#diagnostico">Quero automatizar meu atendimento</a>
+          <a class="btn btn--line" href="#como-funciona">Ver como funciona</a>
+        </div>
+        <ul class="hero__facts">
+          <li>Atende 24h</li>
+          <li>Configurada para o seu negócio</li>
+          <li>Implantação em até 30 dias</li>
+        </ul>
+      </div>
+
+      <div class="hero__stage" aria-label="Exemplo de conversa atendida pela IA">
+        <div class="clock" aria-hidden="true">22:47</div>
+
+        <div class="phone">
+          <div class="phone__top">
+            <span class="avatar">AM</span>
+            <div>
+              <strong>Ana Martins</strong>
+              <small>Veio do anúncio no Instagram</small>
+            </div>
+            <span class="tag tag--on">IA atendendo</span>
+          </div>
+          <ol class="chat" id="heroChat">
+            <li class="bubble bubble--in">Oi! Vi o anúncio. Vocês atendem agora?<time>22:47</time></li>
+            <li class="bubble bubble--out">Oi, Ana! Atendemos sim 😊 Me conta o que você está buscando?<time>22:47 ✓✓</time></li>
+            <li class="bubble bubble--in">Quero parar de perder os leads que chegam dos anúncios.<time>22:48</time></li>
+            <li class="bubble bubble--out">Entendi. Hoje, mais ou menos quantos contatos vocês recebem por mês?<time>22:48 ✓✓</time></li>
+            <li class="bubble bubble--in">Uns 200.<time>22:49</time></li>
+            <li class="bubble bubble--out">Perfeito. Vou passar seu caso para o especialista, ele te chama amanhã às 9h.<time>22:49 ✓✓</time></li>
+          </ol>
+          <div class="phone__compose" aria-hidden="true">Mensagem</div>
+        </div>
+
+        <div class="handoff" id="heroHandoff">
+          <span class="handoff__check" aria-hidden="true">✓</span>
+          <div>
+            <strong>Lead qualificado</strong>
+            <small>Resumo enviado ao comercial em 2 min</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAIXA -->
+  <div class="band" aria-label="O que a IA faz">
+    <ul class="wrap band__list">
+      <li>Atende na hora</li>
+      <li>Faz as perguntas certas</li>
+      <li>Retoma quem sumiu</li>
+      <li>Entrega para sua equipe</li>
+    </ul>
+  </div>
+
+  <!-- PROBLEMA -->
+  <section class="section problem" id="por-que">
+    <div class="wrap problem__grid">
+      <div class="problem__head">
+        <h2 class="h2">Você já pagou pelo lead. Perder no atendimento custa duas vezes.</h2>
+        <p class="muted">Na maioria das empresas, o gargalo começa depois que o anúncio gera o contato.</p>
+      </div>
+
+      <ol class="timeline">
+        <li>
+          <time>22:51</time>
+          <div>
+            <h3>O lead chega fora de hora</h3>
+            <p>À noite, no almoço, no fim de semana ou enquanto você atende outra pessoa.</p>
+          </div>
+        </li>
+        <li>
+          <time>08:36</time>
+          <div>
+            <h3>A resposta demora</h3>
+            <p>Quando alguém pega o celular, o lead já esfriou ou falou com o concorrente.</p>
+          </div>
+        </li>
+        <li>
+          <time>3 dias depois</time>
+          <div>
+            <h3>Ele para de responder</h3>
+            <p>Sem rotina de acompanhamento, a conversa fica esquecida no WhatsApp.</p>
+          </div>
+        </li>
+        <li>
+          <time>O dia inteiro</time>
+          <div>
+            <h3>Você vira atendente</h3>
+            <p>O tempo que deveria ir para proposta e negociação vira pergunta repetida.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <p class="wrap problem__close">O tráfego trouxe a oportunidade. A FD AI cuida para ela não morrer no primeiro contato.</p>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="section how" id="como-funciona">
+    <div class="wrap">
+      <div class="how__head">
+        <h2 class="h2">O atendimento continua mesmo quando você não está no celular.</h2>
+      </div>
+
+      <article class="feature">
+        <div class="feature__text">
+          <h3 class="h3">Responde enquanto o interesse está quente</h3>
+          <p>Assim que o contato chega, a IA inicia a conversa e conduz o primeiro atendimento, sem depender de alguém estar disponível.</p>
+          <ul class="ticks">
+            <li>Atendimento fora do horário comercial</li>
+            <li>Respostas baseadas nas informações da sua empresa</li>
+            <li>Tom de conversa configurado para você</li>
+          </ul>
+        </div>
+        <div class="feature__visual">
+          <div class="card">
+            <div class="notif">
+              <span class="notif__dot" aria-hidden="true"></span>
+              <div><strong>Novo contato</strong><small>Campanha Meta Ads</small></div>
+              <time>22:51</time>
+            </div>
+            <p class="bubble bubble--out bubble--static">Olá, Carlos! Vi que você pediu informações. Posso te ajudar agora.<time>22:51 ✓✓</time></p>
+            <p class="card__foot">Respondido 2 segundos após a entrada</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature__text">
+          <h3 class="h3">Entende quem vale a atenção do comercial</h3>
+          <p>A IA faz as perguntas que você definir e organiza as respostas antes de chamar sua equipe.</p>
+          <ul class="ticks">
+            <li>Necessidade do cliente</li>
+            <li>Faixa de interesse ou orçamento</li>
+            <li>Cidade, região ou unidade</li>
+            <li>Critérios do seu negócio</li>
+          </ul>
+        </div>
+        <div class="feature__visual">
+          <div class="card">
+            <p class="card__title">Qualificação em andamento <span>3 de 4</span></p>
+            <dl class="qual">
+              <div class="qual__row is-done"><dt>Interesse</dt><dd>Automatizar atendimento</dd></div>
+              <div class="qual__row is-done"><dt>Volume mensal</dt><dd>150 a 300 contatos</dd></div>
+              <div class="qual__row is-done"><dt>Atendimento atual</dt><dd>Manual pelo WhatsApp</dd></div>
+              <div class="qual__row is-next"><dt>Próxima pergunta</dt><dd>Principal gargalo comercial</dd></div>
+            </dl>
+            <div class="meter" role="img" aria-label="Qualificação 75% concluída"><span style="width:75%"></span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature__text">
+          <h3 class="h3">Não abandona quem parou de responder</h3>
+          <p>O lead pediu informação e sumiu? A IA retoma a conversa numa cadência definida para a sua empresa.</p>
+          <ul class="ticks">
+            <li>Follow-ups automáticos</li>
+            <li>Mensagens naturais, sem repetir a mesma frase</li>
+            <li>Para sozinha quando o cliente responde</li>
+          </ul>
+        </div>
+        <div class="feature__visual">
+          <div class="card">
+            <ol class="cadence">
+              <li class="is-done"><b>Dia 0</b>Primeiro contato</li>
+              <li class="is-done"><b>Dia 1</b>Follow-up</li>
+              <li class="is-done"><b>Dia 3</b>Nova tentativa</li>
+              <li class="is-win"><b>Dia 5</b>Respondeu</li>
+            </ol>
+            <p class="bubble bubble--out bubble--static">Oi, Carlos! Conseguiu analisar o que conversamos? Se quiser, continuo de onde paramos.<time>09:13 ✓✓</time></p>
+            <p class="bubble bubble--in bubble--static">Consegui sim. Podemos continuar 👍<time>09:20</time></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="feature">
+        <div class="feature__text">
+          <h3 class="h3">Chama sua equipe na hora de vender</h3>
+          <p>IA não precisa estar onde uma pessoa vende melhor. A automação faz o repetitivo e entrega a oportunidade com contexto.</p>
+          <ul class="ticks">
+            <li>Resumo do que foi conversado</li>
+            <li>Dados coletados na qualificação</li>
+            <li>Transferência para o vendedor ou setor certo</li>
+          </ul>
+        </div>
+        <div class="feature__visual">
+          <div class="card card--ticket">
+            <p class="card__title">Oportunidade pronta para o comercial</p>
+            <dl class="ticket">
+              <div><dt>Cliente</dt><dd>Ana Martins</dd></div>
+              <div><dt>Interesse</dt><dd>IA para atendimento</dd></div>
+              <div><dt>Volume</dt><dd>~200 leads/mês</dd></div>
+              <div><dt>Gargalo</dt><dd>Demora na resposta</dd></div>
+            </dl>
+            <span class="ticket__to">Encaminhado para: Marcos, vendas</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PERSONALIZAÇÃO -->
+  <section class="section custom">
+    <div class="wrap custom__grid">
+      <div>
+        <h2 class="h2">Não é um robô genérico. A IA é construída para a sua empresa.</h2>
+        <p class="muted">O projeto começa entendendo como você vende. A partir daí, configuramos o atendimento com suas informações, regras e objetivos.</p>
+      </div>
+      <dl class="custom__list">
+        <div><dt>O que você vende</dt><dd>Produtos, serviços, regiões, condições e tudo que a IA precisa saber.</dd></div>
+        <div><dt>Como você atende</dt><dd>Tom de voz, perguntas, objeções e dados que devem ser coletados.</dd></div>
+        <div><dt>Quando sua equipe entra</dt><dd>O ponto de transferência e quem recebe cada tipo de oportunidade.</dd></div>
+        <div><dt>Como o lead é acompanhado</dt><dd>A lógica de follow-up e os próximos passos da conversa.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- COMPARATIVO -->
+  <section class="section compare">
+    <div class="wrap">
+      <h2 class="h2 compare__title">O mesmo lead. Dois atendimentos diferentes.</h2>
+      <div class="compare__grid">
+        <div class="lane lane--manual">
+          <h3>Atendimento manual</h3>
+          <ol>
+            <li><time>22:47</time>Lead chama no WhatsApp</li>
+            <li><time>08:36</time>Resposta no dia seguinte</li>
+            <li><time>—</time>Lead não responde mais</li>
+          </ol>
+          <p class="lane__end">Oportunidade perdida</p>
+        </div>
+        <div class="lane lane--ai">
+          <h3>Com FD AI</h3>
+          <ol>
+            <li><time>22:47</time>Lead chama no WhatsApp</li>
+            <li><time>22:47</time>IA inicia o atendimento</li>
+            <li><time>22:51</time>Lead qualificado</li>
+          </ol>
+          <p class="lane__end">Oportunidade entregue ao comercial</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPLANTAÇÃO -->
+  <section class="section implant" id="implantacao">
+    <div class="wrap">
+      <div class="implant__head">
+        <h2 class="h2">Você não precisa entender de IA. Precisa nos explicar seu negócio.</h2>
+        <p class="muted">O restante da configuração fica com a gente.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Entendemos sua operação</h3><p>Mapeamos o que você vende, como os contatos chegam e o que acontece até a venda.</p></li>
+        <li><h3>Construímos o atendimento</h3><p>Configuramos a IA, as perguntas, regras, respostas e o acompanhamento.</p></li>
+        <li><h3>Você testa e pede mudanças</h3><p>Você conversa com a IA e ajustamos o que for necessário.</p></li>
+        <li><h3>Colocamos em operação</h3><p>Validada, ela começa a atender dentro do processo definido.</p></li>
+      </ol>
+      <p class="implant__time"><strong>Até 30 dias</strong> para implantação, testes e ajustes iniciais.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="wrap cta__inner">
+      <h2 class="cta__title">Quantos leads entram quando você não está olhando o celular?</h2>
+      <p>Conte como sua empresa atende hoje. A gente mostra o que pode ser automatizado.</p>
+      <a class="btn btn--primary" href="#diagnostico">Quero analisar meu atendimento</a>
+    </div>
+  </section>
+
+  <!-- DIAGNÓSTICO -->
+  <section class="section diag" id="diagnostico">
+    <div class="wrap diag__grid">
+      <div class="diag__side">
+        <h2 class="h2">Vamos entender sua operação.</h2>
+        <p class="muted">São 8 perguntas rápidas. No final, tudo chega organizado no nosso WhatsApp para continuarmos a conversa.</p>
+      </div>
+
+      <form class="quiz" id="leadForm" novalidate>
+        <div class="quiz__progress">
+          <span id="stepNum">1</span> de 8
+          <div class="quiz__bar"><span id="progress"></span></div>
+        </div>
+
+        <fieldset class="step is-active">
+          <legend>Qual é o seu nome?</legend>
+          <input name="nome" type="text" autocomplete="name" placeholder="Seu nome" required>
+          <div class="step__nav"><button class="btn btn--primary next" type="button">Continuar</button></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend>Qual é o seu WhatsApp?</legend>
+          <input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="(00) 00000-0000" required>
+          <div class="step__nav"><button class="back" type="button">Voltar</button><button class="btn btn--primary next" type="button">Continuar</button></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend>Qual é o @ da sua empresa?</legend>
+          <input name="instagram" type="text" placeholder="@suaempresa" required>
+          <div class="step__nav"><button class="back" type="button">Voltar</button><button class="btn btn--primary next" type="button">Continuar</button></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend>O que sua empresa vende e como funciona o atendimento hoje?</legend>
+          <textarea name="operacao" rows="4" placeholder="Ex.: vendemos planos de saúde, o atendimento é feito por 2 pessoas no WhatsApp…" required></textarea>
+          <div class="step__nav"><button class="back" type="button">Voltar</button><button class="btn btn--primary next" type="button">Continuar</button></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend>Quantos novos atendimentos vocês recebem por mês?</legend>
+          <input type="hidden" name="volume">
+          <div class="options" data-name="volume">
+            <button type="button">Até 50</button><button type="button">50 a 150</button><button type="button">150 a 300</button><button type="button">300 a 500</button><button type="button">500 a 1.000</button><button type="button">Mais de 1.000</button><button type="button">Não sei informar</button>
+          </div>
+          <div class="step__nav"><button class="back" type="button">Voltar</button></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend>Qual é o faturamento mensal da empresa?</legend>
+          <p class="step__hint">Não interfere no orçamento. Serve para entendermos o momento da operação.</p>
+          <input type="hidden" name="faturamento">
+          <div class="options" data-name="faturamento">
+            <button type="button">Até R$15 mil</button><button type="button">R$15 mil a R$30 mil</button><button type="button">R$30 mil a R$50 mil</button><button type="button">R$50 mil a R$100 mil</button><button type="button">R$100 mil a R$300 mil</button><button type="button">Acima de R$300 mil</button><button type="button">Prefiro não informar</button>
+          </div>
+          <div class="step__nav"><button class="back" type="button">Voltar</button></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend>O que você gostaria que a IA fizesse?</legend>
+          <p class="step__hint">Selecione quantas opções quiser.</p>
+          <div class="options options--multi" data-name="automacao">
+            <button type="button" aria-pressed="false">Responder na hora</button><button type="button" aria-pressed="false">Fazer primeiro atendimento</button><button type="button" aria-pressed="false">Qualificar leads</button><button type="button" aria-pressed="false">Tirar dúvidas</button><button type="button" aria-pressed="false">Fazer follow-up</button><button type="button" aria-pressed="false">Agendar</button><button type="button" aria-pressed="false">Encaminhar para vendedores</button><button type="button" aria-pressed="false">Quero entender as possibilidades</button>
+          </div>
+          <div class="step__nav"><button class="back" type="button">Voltar</button><button class="btn btn--primary next" type="button">Continuar</button></div>
+        </fieldset>
+
+        <fieldset class="step">
+          <legend>Qual é hoje o principal problema do seu atendimento?</legend>
+          <input type="hidden" name="dor">
+          <div class="options" data-name="dor">
+            <button type="button">Demora para responder</button><button type="button">Leads param de responder</button><button type="button">Fico preso(a) ao WhatsApp</button><button type="button">Equipe perde muito tempo</button><button type="button">Muitos contatos para organizar</button><button type="button">Quero vender mais sem aumentar equipe</button><button type="button">Atender fora do horário</button>
+          </div>
+          <div class="step__nav"><button class="back" type="button">Voltar</button></div>
+        </fieldset>
+
+        <fieldset class="step step--done">
+          <legend>Pronto. Já sabemos por onde começar.</legend>
+          <p>Seu diagnóstico vai junto para o WhatsApp. Você não precisa responder tudo de novo.</p>
+          <a class="btn btn--whats" id="wa" href="#" target="_blank" rel="noopener">Enviar diagnóstico pelo WhatsApp</a>
+        </fieldset>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <div class="wrap faq__grid">
+      <h2 class="h2">Antes de começar.</h2>
+      <div class="faq__list">
+        <details><summary>A IA substitui minha equipe?</summary><p>Não precisa. Ela assume o atendimento repetitivo e entrega para sua equipe as oportunidades que precisam de uma pessoa.</p></details>
+        <details><summary>Ela atende fora do horário comercial?</summary><p>Sim. O atendimento continua à noite, em finais de semana e feriados.</p></details>
+        <details><summary>A IA é igual para todas as empresas?</summary><p>Não. Configuramos informações, regras, perguntas, linguagem e fluxo conforme a sua operação.</p></details>
+        <details><summary>Posso pedir alterações durante a implantação?</summary><p>Sim. O período de implantação inclui testes e ajustes para alinhar o atendimento.</p></details>
+        <details><summary>Quanto custa?</summary><p>Depende do que sua operação precisa. Por isso fazemos um diagnóstico antes de montar a proposta.</p></details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div>
+      <a class="logo logo--light" href="/"><span class="logo__mark" aria-hidden="true"></span>FD AI</a>
+      <p>IA aplicada ao atendimento e vendas.</p>
+    </div>
+    <nav class="site-footer__links" aria-label="Soluções">
+      <a href="/ia-atendimento-whatsapp.html">IA de atendimento no WhatsApp</a>
+      <a href="/atendimento-automatico-whatsapp.html">Atendimento automático</a>
+      <a href="/automatizar-atendimento-whatsapp.html">Como automatizar o atendimento</a>
+      <a href="/chatbot-whatsapp-ia.html">Chatbot WhatsApp com IA</a>
+      <a href="/qualificacao-de-leads-com-ia.html">Qualificação de leads</a>
+      <a href="/follow-up-automatico-whatsapp.html">Follow-up automático</a>
+      <a href="/ia-para-vendas.html">IA para vendas</a>
+      <a href="/ia-atendimento-clinica.html">IA para clínicas</a>
+      <a href="/chatbot-para-imobiliaria.html">Chatbot para imobiliária</a>
+      <a href="/ia-atendimento-escritorio-advocacia.html">IA para advocacia</a>
+    </nav>
+    <p class="site-footer__copy">© 2026 FD AI</p>
+  </div>
+</footer>
+
+<!-- POPUP DE SAÍDA -->
+<div class="exit" id="exitOverlay" hidden>
+  <div class="exit__box" role="dialog" aria-modal="true" aria-labelledby="exitTitle">
+    <button class="exit__close" id="exitClose" type="button" aria-label="Fechar">×</button>
+    <h2 id="exitTitle">Quer ver como a IA atenderia um cliente da sua empresa?</h2>
+    <p>Conte rapidinho o que você vende. A gente mostra como seria o primeiro atendimento no seu caso.</p>
+    <label class="sr-only" for="exitBusiness">O que sua empresa vende</label>
+    <input id="exitBusiness" type="text" placeholder="Ex.: clínica odontológica, loja de móveis…">
+    <div class="exit__actions">
+      <button class="btn btn--primary" id="exitGo" type="button">Quero ver um exemplo</button>
+      <button class="back" id="exitNo" type="button">Agora não</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const WHATS = '5531998853305';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Header ao rolar */
+  const header = document.querySelector('.site-header');
+  const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 8);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* Conversa do hero */
+  const bubbles = [...document.querySelectorAll('#heroChat .bubble')];
+  const handoff = document.getElementById('heroHandoff');
+  if (reduce) {
+    bubbles.forEach(b => b.classList.add('is-in')); handoff.classList.add('is-in');
+  } else {
+    bubbles.forEach((b, i) => setTimeout(() => b.classList.add('is-in'), 500 + i * 900));
+    setTimeout(() => handoff.classList.add('is-in'), 500 + bubbles.length * 900);
+  }
+
+  /* Diagnóstico */
+  const f = document.getElementById('leadForm');
+  const steps = [...f.querySelectorAll('.step')];
+  const num = document.getElementById('stepNum');
+  const bar = document.getElementById('progress');
+  const total = 8;
+  let cur = 0;
+
+  const val = n => (f.querySelector(`[name="${n}"]`) || {}).value || '';
+  function show(n) {
+    cur = Math.max(0, Math.min(n, steps.length - 1));
+    steps.forEach((s, i) => s.classList.toggle('is-active', i === cur));
+    const v = Math.min(cur + 1, total);
+    num.textContent = v;
+    bar.style.width = (cur >= total ? 100 : (v / total) * 100) + '%';
+    const field = steps[cur].querySelector('input:not([type=hidden]), textarea, .options button');
+    if (field && cur > 0) field.focus({ preventScroll: true });
+    if (cur === total) build();
+  }
+  function valid() {
+    const x = steps[cur].querySelector('input:not([type=hidden]), textarea');
+    if (x && !x.value.trim()) { x.classList.add('is-error'); x.focus(); return false; }
+    if (x) x.classList.remove('is-error');
+    return true;
+  }
+  f.querySelectorAll('.next').forEach(b => b.addEventListener('click', () => { if (valid()) show(cur + 1); }));
+  f.querySelectorAll('.back').forEach(b => b.addEventListener('click', () => show(cur - 1)));
+  f.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') { e.preventDefault(); if (valid()) show(cur + 1); }
+  });
+  f.querySelectorAll('.options').forEach(o => o.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    if (o.classList.contains('options--multi')) {
+      b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true');
+      return;
+    }
+    o.querySelectorAll('button').forEach(x => x.classList.remove('is-selected'));
+    b.classList.add('is-selected');
+    f.querySelector(`[name="${o.dataset.name}"]`).value = b.textContent.trim();
+    setTimeout(() => show(cur + 1), 150);
+  })));
+  function build() {
+    const auto = [...f.querySelectorAll('[data-name=automacao] [aria-pressed=true]')].map(x => x.textContent.trim()).join(', ');
+    const msg = `Olá! Preenchi o diagnóstico no site da FD AI.
+
+Nome: ${val('nome')}
+WhatsApp: ${val('whatsapp')}
+Instagram: ${val('instagram')}
+Empresa/atendimento: ${val('operacao')}
+Atendimentos/mês: ${val('volume')}
+Faturamento: ${val('faturamento')}
+Quero automatizar: ${auto || 'Não informado'}
+Principal problema: ${val('dor')}
+
+Quero entender como a IA pode funcionar na minha empresa.`;
+    document.getElementById('wa').href = `https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}`;
+  }
+
+  /* Popup de saída (só desktop, uma vez por sessão) */
+  const overlay = document.getElementById('exitOverlay');
+  let shown = false;
+  try { shown = sessionStorage.getItem('fdExit') === '1'; } catch (e) {}
+  const close = () => { overlay.hidden = true; };
+  function open() {
+    if (shown) return; shown = true;
+    try { sessionStorage.setItem('fdExit', '1'); } catch (e) {}
+    overlay.hidden = false; document.getElementById('exitBusiness').focus();
+  }
+  if (matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mouseout', e => { if (e.clientY <= 5 && !e.relatedTarget) open(); });
+  }
+  document.getElementById('exitClose').onclick = close;
+  document.getElementById('exitNo').onclick = close;
+  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !overlay.hidden) close(); });
+  document.getElementById('exitGo').onclick = () => {
+    const t = document.getElementById('exitBusiness').value.trim();
+    const msg = `Olá! Eu estava no site da FD AI e quero ver um exemplo de como a IA atenderia um cliente da minha empresa.${t ? `\n\nMinha empresa vende: ${t}` : ''}`;
+    window.open(`https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    close();
+  };
+})();
+</script>
+</body>
+</html>
